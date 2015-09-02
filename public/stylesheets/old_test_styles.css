@@ -1,0 +1,78 @@
+ /* previous menu attempt
+
+    div(class="nav")
+      ul
+        li #[a(href="/") #[img(id="btn-home" src="images/ums purple.png")]]
+          ul
+            li #[a(href="/about") ABOUT]
+            li #[a(href="/nUrve-sensor") nUrve SENSOR]
+            li #[a(href="/map") DATA]
+            li #[a(href="/kickstarter") KICKSTARTER]
+            li #[a(href="/blog") BLOG]
+            li #[a(href="/legal") LEGAL]
+            li #[a(href="/my-account") MY ACCOUNT]
+
+        div(class="rmm")
+            ul
+                li #[a(href="/about") ABOUT]
+            li #[a(href="/nUrve-sensor") nUrve SENSOR]
+            li #[a(href="/map") DATA]
+            li #[a(href="/kickstarter") KICKSTARTER]
+            li #[a(href="/blog") BLOG]
+            li #[a(href="/legal") LEGAL]
+            li #[a(href="/my-account") MY ACCOUNT]
+
+
+  //<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script> // shouldn't need since pull in jquery from google...
+
+// previous css for menu
+/* class styles */
+.nav ul {
+  list-style: none;
+  background-color: #fff;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  border-bottom: 2px solid #9933FF;
+  z-index: 999;
+}
+.nav il {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.2em;
+  line-height: 40px;
+  height: 40px;
+  border-bottom: 1px solid #888;
+}
+.nav > ul > li ul {
+  visibility: hidden;
+  transition: 0.2s 0.3s;
+}
+.nav > ul > li:hover ul {
+  visibility: visible;
+  transition-delay: 0.1s;
+}
+.nav a {
+  text-decoration: none;
+  color: #9933FF;
+  display: block;
+  transition: .3s background-color;
+}
+.nav a:hover {
+  background-color: #b9b8b8;
+}
+.nav a.active {
+  background-color: #fff;
+  color: #444;
+  cursor: default;
+}
+@media screen and (min-width: 1440px) {
+  .nav li {
+    display: inline-block;
+    width: 180px;
+    border-bottom: none;
+    height: 50px;
+    line-height: 50px;
+    font-size: 1.4em;
+    visibility: visible;
+  }
+}

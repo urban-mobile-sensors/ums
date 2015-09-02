@@ -1,0 +1,97 @@
+/*
+
+Responsive Mobile Menu v1.0
+Plugin URI: responsivemobilemenu.com
+
+Author: Sergio Vitov
+Author URI: http://xmacros.com
+
+License: CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
+
+Adapted by Clayton Hunter, under development as of August 31, 2015
+
+*/
+
+.rmm {
+	display:block;
+	position:relative;
+	width:100%;
+	padding:0px;
+	margin:0 auto !important;
+	text-align: center;
+  background-color: #fff;
+  border-bottom: 2px solid #9933FF;
+  z-index: 999;
+}
+.rmm * {
+	-webkit-tap-highlight-color:transparent !important;
+	font-family:Arial;
+}
+.rmm a {
+	color:#9933FF;
+	text-decoration:none;
+  transition: .3s background-color;
+}
+.rmm a:hover {
+  background-color: #b9b8b8;
+}
+
+.rmm .rmm-main-list, .rmm .rmm-main-list li {
+	margin:0px;
+	padding-left:10px;
+	padding-right:10px;
+  /*display: inline-bock;*/
+  font-size: 1.2em;
+/*  line-height: 40px;
+  height: 40px;
+  width: 180px;*/
+}
+
+.rmm ul {
+	display:block;
+	width:auto !important;
+	margin:0 auto !important;
+	overflow:hidden;
+	list-style:none;
+  /*border-bottom: 2px solid #9933FF;*/
+}
+
+.rmm li {
+  font-size: 1.2em;
+  line-height: 40px;
+  height: 40px;
+  width: 150px;
+}
+
+/* sublevel menu - in construction */
+.rmm ul li ul, .rmm ul li ul li, .rmm ul li ul li a {
+	display:none !important;
+	height:0px !important;
+	width:0px !important;
+}
+/* */
+
+.rmm .rmm-main-list li {
+	display:inline;
+	padding:padding:0px;
+	margin:0px !important;
+}
+.rmm-toggled {
+	display:none;
+	width:100%;
+	position:relative;
+	overflow:hidden;
+	margin:0 auto !important;
+}
+.rmm-button:hover {
+	cursor:pointer;
+}
+.rmm .rmm-toggled ul {
+	display:none;
+	margin:0px !important;
+	padding:0px !important;
+}
+.rmm .rmm-toggled ul li {
+	display:block;
+	margin:0 auto !important;
+}

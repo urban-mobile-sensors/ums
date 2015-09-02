@@ -1,0 +1,32 @@
+doctype html
+html
+  head
+
+    meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no")
+    title= "UMS: Urban Mobile Sensors"
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
+    script(src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js')
+
+    // scripts from Sergio Vitov for dynamic, responsive navigation menu
+    link(rel="stylesheet" href="stylesheets/responsivemobilemenu.css" type="text/css")
+    script(type="text/javascript" src="js/responsivemobilemenu.js")
+
+    //meta(name="viewport" content="initial-scale=1.0")
+
+    // cartodb scripts for webmap functionality
+    link(rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css")
+    script(src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js")
+
+  body
+    div(class="rmm")
+      ul
+        li #[a(href="/") #[img(id="btn-home" src="images/ums purple.png")]]
+        li #[a(href="/about") ABOUT]
+        li #[a(href="/nUrve-sensor") nUrve SENSOR]
+        li #[a(href="/map") MAP]
+        li #[a(href="/kickstarter") KICKSTARTER]
+        li #[a(href="/blog") BLOG]
+        li #[a(href="/legal") LEGAL]
+        li #[a(href="/my-account") MY ACCOUNT]
+    block content

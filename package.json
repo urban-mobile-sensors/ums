@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "ums-nurve-cartodb"
+    "url": "ums"
   },
   "author": "crusselsh",
   "contributors": ["Clayton Hunter <clayton@urbanmobilesensors.com>", "Nadir Ait-Laoussine <nadir@urbanmobilesensors.com"],

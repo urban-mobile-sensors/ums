@@ -17,18 +17,6 @@ function responsiveMobileMenu() {
 
 			$(this).children('ul').addClass('rmm-main-list');	// mark main menu list
 
-			/* to add custom sexy styling...*/
-      /*
-			var $style = $(this).attr('data-menu-style');	// get menu style
-				if ( typeof $style == 'undefined' ||  $style == false )
-					{
-						$(this).addClass('graphite'); // set graphite style if style is not defined
-					}
-				else {
-						$(this).addClass($style);
-					}
-			*/
-
 			/* 	width of menu list (non-toggled) */
 
 			var $width = 0;

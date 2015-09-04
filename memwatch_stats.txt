@@ -1,3 +1,0 @@
-num_full_gc,num_inc_gc,heap_compactions,usage_trend,estimated_base,current_base,min,max
-1,0,1,0,8045560,8045560,0,0
-2,5,2,0,23765008,23765008,0,0

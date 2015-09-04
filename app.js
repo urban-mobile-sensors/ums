@@ -12,18 +12,15 @@ var users = require('./routes/users');
 var app = express();
 
 /* set up memwatch */
-var memwatch = require('memwatch-next');
-
+var memwatch = require('memwatch-next'),
+    filename = "./page_testing/memwatch_stats.txt",
+    firstLine = true,
+    leakFile = "./page_testing/memwatch_stats.txt";
 memwatch.on('leak', function(info) {
-  console.log('leak is', JSON.stringify(info, null, 2));
+  var fs = require("fs");
+
+  //console.log('leak is', JSON.stringify(info, null, 2));
 });
-
-/*
-var snapshotTaken = false,
-    hd;*/
-
-var filename = "./page_testing/memwatch_stats.txt",
-    firstLine = true;
 
 memwatch.on('stats', function(stats) {
   /*example from: http://www.willvillanueva.com/the-node-js-profiling-guide-that-hasnt-existed-finding-a-potential-memory-leak-using-memwatch-part-2/*/

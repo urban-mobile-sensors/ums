@@ -1,0 +1,39 @@
+// overview output from apache benchmark (following Will V example here:http://www.willvillanueva.com/the-node-js-profiling-guide-that-hasnt-existed-finding-a-potential-memory-leak-using-memwatch-part-2/)
+//:
+Server Software:        
+Server Hostname:        localhost
+Server Port:            3000
+
+Document Path:          /
+Document Length:        1385 bytes
+
+Concurrency Level:      10
+Time taken for tests:   619.265 seconds
+Complete requests:      50000
+Failed requests:        0
+Total transferred:      79150000 bytes
+HTML transferred:       69250000 bytes
+Requests per second:    80.74 [#/sec] (mean)
+Time per request:       123.853 [ms] (mean)
+Time per request:       12.385 [ms] (mean, across all concurrent requests)
+Transfer rate:          124.82 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.0      0       1
+Processing:    49  124  22.5    117     286
+Waiting:       48  124  22.5    117     286
+Total:         49  124  22.5    117     286
+
+Percentage of the requests served within a certain time (ms)
+  50%    117
+  66%    133
+  75%    142
+  80%    146
+  90%    154
+  95%    159
+  98%    174
+  99%    183
+ 100%    286 (longest request)
+
+

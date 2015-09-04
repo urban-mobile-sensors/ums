@@ -11,13 +11,58 @@ var users = require('./routes/users');
 
 var app = express();
 
+/* set up memwatch */
+var memwatch = require('memwatch-next');
+
+memwatch.on('leak', function(info) {
+  console.log('leak is', JSON.stringify(info, null, 2));
+});
+
+/*
+var snapshotTaken = false,
+    hd;*/
+
+var filename = "./page_testing/memwatch_stats.txt",
+    firstLine = true;
+
+memwatch.on('stats', function(stats) {
+  /*example from: http://www.willvillanueva.com/the-node-js-profiling-guide-that-hasnt-existed-finding-a-potential-memory-leak-using-memwatch-part-2/*/
+  var fs = require("fs"),
+        info = [];
+
+    if(firstLine) {
+        info.push("num_full_gc");
+        info.push("num_inc_gc");
+        info.push("heap_compactions");
+        info.push("usage_trend");
+        info.push("estimated_base");
+        info.push("current_base");
+        info.push("min");
+        info.push("max");
+        fs.appendFileSync(filename, info.join(",") + "\n");
+        info = [];
+        firstLine = false;
+    }
+    info.push(stats["num_full_gc"]);
+    info.push(stats["num_inc_gc"]);
+    info.push(stats["heap_compactions"]);
+    info.push(stats["usage_trend"]);
+    info.push(stats["estimated_base"]);
+    info.push(stats["current_base"]);
+    info.push(stats["min"]);
+    info.push(stats["max"]);
+
+    fs.appendFile(filename, info.join(",") + "\n");
+});
+/* END memwatch*/
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+//app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());

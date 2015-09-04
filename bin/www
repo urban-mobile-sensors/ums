@@ -5,8 +5,9 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('ums-nurve-mongodb:server');
+var debug = require('debug')('ums:server');
 var http = require('http');
+
 
 /**
  * Get port from environment and store in Express.

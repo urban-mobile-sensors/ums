@@ -5,8 +5,7 @@
   "readme": "README.md",
   "private": true,
   "scripts": {
-    "test": "node ./bin/www",
-    "start": "pm2 start ./bin/www"
+    "start": "node ./bin/www"
   },
   "dependencies": {
     "body-parser": "~1.13.2",

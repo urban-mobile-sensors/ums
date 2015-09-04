@@ -1,0 +1,16 @@
+Issue:
+Puts UMS image at top and a large space between rest of menu items, tested below on jfiddle successfully so must be interaction with responsivemobilemenu settings but not sure what
+
+CSS:
+#home-wrap .home-text {
+  position: relative;
+  bottom: 30;
+  font-size: 1em;
+  visibility: hidden;
+}
+#home-wrap:hover .home-text{
+  visibility:visible;
+}
+
+Jade for item:
+li #[a(href="/" id="home-wrap") #[img(id="btn-home" src="images/ums purple.png")] #[p(class="home-text") Home]]

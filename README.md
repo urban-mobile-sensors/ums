@@ -12,5 +12,3 @@ pre-release beta 0.0.1
 
 MIT
 
-### sources
-http://denelius.com/leaflet-node-mongodb/ - simple intro of using node with Jade and MongoDB

@@ -18,9 +18,14 @@ var memwatch = require('memwatch-next'),
     leakFile = "./page_testing/memwatch_stats.txt";
 memwatch.on('leak', function(info) {
   var fs = require("fs");
-
+  fs.appendFile(leakFile, JSON.stringify(info) + "\n");
   //console.log('leak is', JSON.stringify(info, null, 2));
 });
+
+{ start: Fri, 29 Jun 2012 14:12:13 GMT,
+  end: Fri, 29 Jun 2012 14:12:33 GMT,
+  growth: 67984,
+  reason: 'heap growth over 5 consecutive GCs (20s) - 11.67 mb/hr' }
 
 memwatch.on('stats', function(stats) {
   /*example from: http://www.willvillanueva.com/the-node-js-profiling-guide-that-hasnt-existed-finding-a-potential-memory-leak-using-memwatch-part-2/*/

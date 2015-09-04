@@ -58,3 +58,15 @@ num_full_gc,num_inc_gc,heap_compactions,usage_trend,estimated_base,current_base,
 num_full_gc,num_inc_gc,heap_compactions,usage_trend,estimated_base,current_base,min,max
 1,0,1,0,8051696,8051696,0,0
 2,5,2,0,23280088,23280088,0,0
+num_full_gc,num_inc_gc,heap_compactions,usage_trend,estimated_base,current_base,min,max
+1,0,1,0,8070064,8070064,0,0
+num_full_gc,num_inc_gc,heap_compactions,usage_trend,estimated_base,current_base,min,max
+1,0,1,0,8080472,8080472,0,0
+num_full_gc,num_inc_gc,heap_compactions,usage_trend,estimated_base,current_base,min,max
+1,0,1,0,8050096,8050096,0,0
+num_full_gc,num_inc_gc,heap_compactions,usage_trend,estimated_base,current_base,min,max
+1,4,1,0,23288144,23288144,0,0
+num_full_gc,num_inc_gc,heap_compactions,usage_trend,estimated_base,current_base,min,max
+1,4,1,0,22920184,22920184,0,0
+num_full_gc,num_inc_gc,heap_compactions,usage_trend,estimated_base,current_base,min,max
+1,4,1,0,21509648,21509648,0,0

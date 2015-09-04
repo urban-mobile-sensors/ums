@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "test": "node ./bin/www",
-    "start": "pm2 start ./bin/www"
+    "start": "pm2 start ./bin/www -i 1 --name ums"
   },
   "dependencies": {
     "body-parser": "~1.13.2",

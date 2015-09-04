@@ -23,7 +23,10 @@ memwatch.on('leak', function(info) {
 });
 
 memwatch.on('stats', function(stats) {
-  /*example from: http://www.willvillanueva.com/the-node-js-profiling-guide-that-hasnt-existed-finding-a-potential-memory-leak-using-memwatch-part-2/*/
+/***
+example from:
+http://www.willvillanueva.com/the-node-js-profiling-guide-that-hasnt-existed-finding-a-potential-memory-leak-using-memwatch-part-2/
+***/
   var fs = require("fs"),
         info = [];
 

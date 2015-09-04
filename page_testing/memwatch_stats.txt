@@ -70,3 +70,5 @@ num_full_gc,num_inc_gc,heap_compactions,usage_trend,estimated_base,current_base,
 1,4,1,0,22920184,22920184,0,0
 num_full_gc,num_inc_gc,heap_compactions,usage_trend,estimated_base,current_base,min,max
 1,4,1,0,21509648,21509648,0,0
+num_full_gc,num_inc_gc,heap_compactions,usage_trend,estimated_base,current_base,min,max
+1,5,1,0,22795000,22795000,0,0

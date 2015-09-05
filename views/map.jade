@@ -3,4 +3,19 @@ extends layout
 
 block content
   div(id='map')
+  div(id='data-select')
+    p Select the data you want to explore!
+    p First, the primary data column that will be displayed on the map
+      select(id="ddlList")
+        #[option(value="temperature") Temperature]
+        #[option(value="light") Light]
+        #[option(value="sound") Sound]
+        #[option(value="impact_accel") Accelerometer]
+        #[option(value="co") CO]
+        #[option(value="lpg") LPG]
+        #[option(value="methane") Methane]
+        #[option(value="o3") O3]
+        #[option(value="altitude") Altitude]
+    p
+      button(id="primary-field") Primary data column
   script(src='/js/map.js')

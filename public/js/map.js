@@ -45,6 +45,9 @@ var cbd_layer = {
   }]
 };
 
+function createSummarySQL(avgField){
+}
+
     //sql: "SELECT avg(methane) as methane, the_geom_webmercator FROM boston_sample_hexv500m GROUP BY the_geom_webmercator", // Required
 /*
 var cbd_torque = {
@@ -86,7 +89,10 @@ $(document).ready(function () {
     */
 
     // create layer from cartodb layer refernced above, TO DO: include a jquery form to set summary parameters, or is there a better way?
-    cartodb.createLayer(map, cbd_layer).addTo(map);
+    $('#primary-field').click(function(){
+      alert($('#ddlList').val());
+      cartodb.createLayer(map, cbd_layer).addTo(map);
+    });
 
   });
 });

@@ -7,3 +7,14 @@ body { margin:0; padding:0; }
 }
 
 #map { position: absolute; top: 50px; left: 30px; /*bottom: 0; width:100%;*/ height: 600px; width: 800px; }
+
+#data-select {
+  position:absolute;
+  top:50px; left:850px;
+  width:auto; height:auto;
+}
+
+/*
+#ddlList {position:relative;}
+#primary-field { position:relative;}
+*/

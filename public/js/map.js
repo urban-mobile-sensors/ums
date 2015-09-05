@@ -20,25 +20,32 @@ window.onload = function() {
 // initialize some variables
 var map = new L.map('map'),
     startPosition;
+/* works but slow, what is result of query named to avoid using CTE's?
+*/
+var cartocss = '#summary_tbl{ polygon-fill: #F1EEF6; polygon-opacity: 0.8; line-color: #FFF; line-width: 0.5; line-opacity: 1;}',
+cartocss = cartocss + '#summary_tbl [ methane <= 158.47731712611244] { polygon-fill: #91003F; }',
+    cartocss = cartocss + '#summary_tbl [ methane <= 135] { polygon-fill: #CE1256; }',
+    cartocss = cartocss + '#summary_tbl [ methane <= 120.95519348268839] { polygon-fill: #E7298A; }',
+    cartocss = cartocss + '#summary_tbl [ methane <= 112.3529411764706] { polygon-fill: #DF65B0; }',
+    cartocss = cartocss + '#summary_tbl [ methane <= 108.42857142857143] { polygon-fill: #C994C7; }',
+    cartocss = cartocss + '#summary_tbl [ methane <= 104.09859154929578] { polygon-fill: #D4B9DA; }',
+    cartocss = cartocss + '#summary_tbl [ methane <= 98.36206896551724] { polygon-fill: #F1EEF6; }';
 
-var cartocss = '#boston_sample_hexv500m{ polygon-fill: #F1EEF6; polygon-opacity: 0.8; line-color: #FFF; line-width: 0.5; line-opacity: 1;}',
-    cartocss = cartocss + '#boston_sample_hexv500m [ methane <= 158.47731712611244] { polygon-fill: #91003F; }',
-    cartocss = cartocss + '#boston_sample_hexv500m [ methane <= 135] { polygon-fill: #CE1256; }',
-    cartocss = cartocss + '#boston_sample_hexv500m [ methane <= 120.95519348268839] { polygon-fill: #E7298A; }',
-    cartocss = cartocss + '#boston_sample_hexv500m [ methane <= 112.3529411764706] { polygon-fill: #DF65B0; }',
-    cartocss = cartocss + '#boston_sample_hexv500m [ methane <= 108.42857142857143] { polygon-fill: #C994C7; }',
-    cartocss = cartocss + '#boston_sample_hexv500m [ methane <= 104.09859154929578] { polygon-fill: #D4B9DA; }',
-    cartocss = cartocss + '#boston_sample_hexv500m [ methane <= 98.36206896551724] { polygon-fill: #F1EEF6; }';
+var sql_summ = "WITH summary_tbl AS (SELECT avg(n.methane) as methane, count(n.methane) as record_count, h.the_geom_webmercator ",
+    sql_summ = sql_summ + "FROM nurve_sample_boston_0828 n JOIN hex_base_v500m h ON ST_Within(n.the_geom, h.the_geom) ",
+    sql_summ = sql_summ + "GROUP BY h.the_geom_webmercator) SELECT methane, the_geom_webmercator FROM summary_tbl";
 
 var cbd_layer = {
   user_name: 'crshunter', // Required
   type: 'cartodb', // Required
   sublayers: [{
-      sql: "SELECT avg(methane) as methane, the_geom_webmercator FROM boston_sample_hexv500m GROUP BY the_geom_webmercator", // Required
-      cartocss: cartocss, // Required
-      interactivity: "methane"//, column2, ...", // Optional
+    sql: sql_summ,
+    cartocss: cartocss//, // Required
+    //interactivity: "methane, record_count"//, column2, ...", // Optional
   }]
 };
+
+    //sql: "SELECT avg(methane) as methane, the_geom_webmercator FROM boston_sample_hexv500m GROUP BY the_geom_webmercator", // Required
 /*
 var cbd_torque = {
   type: 'torque', // Required

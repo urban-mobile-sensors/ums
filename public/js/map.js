@@ -1,4 +1,5 @@
 // 'bin/map.js'
+var cdb = require('../../bin/cdb-client.js');
 
 // CartoDB map vizualizations to use as simple samples
 // NY apt -> https://crshunter.cartodb.com/api/v2/viz/d8faee2a-4db6-11e5-9192-0e43f3deba5a/viz.json
@@ -22,6 +23,8 @@ var map = new L.map('map'),
     startPosition;
 /* works but slow, what is result of query named to avoid using CTE's?
 */
+
+// change to function which pulls table stats for binning from cdb-client.js and column from user input
 var cartocss = '#summary_tbl{ polygon-fill: #F1EEF6; polygon-opacity: 0.8; line-color: #FFF; line-width: 0.5; line-opacity: 1;}',
 cartocss = cartocss + '#summary_tbl [ methane <= 158.47731712611244] { polygon-fill: #91003F; }',
     cartocss = cartocss + '#summary_tbl [ methane <= 135] { polygon-fill: #CE1256; }',

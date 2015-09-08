@@ -94,3 +94,9 @@ num_full_gc,num_inc_gc,heap_compactions,usage_trend,estimated_base,current_base,
 1,4,1,0,22465864,22465864,0,0
 num_full_gc,num_inc_gc,heap_compactions,usage_trend,estimated_base,current_base,min,max
 1,5,1,0,23545536,23545536,0,0
+num_full_gc,num_inc_gc,heap_compactions,usage_trend,estimated_base,current_base,min,max
+1,1,1,0,10390680,10390680,0,0
+2,8,2,0,62321840,62321840,0,0
+num_full_gc,num_inc_gc,heap_compactions,usage_trend,estimated_base,current_base,min,max
+1,1,1,0,10385024,10385024,0,0
+2,8,2,0,62335776,62335776,0,0

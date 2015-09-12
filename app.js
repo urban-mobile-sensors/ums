@@ -18,7 +18,7 @@ http://www.willvillanueva.com/the-node-js-profiling-guide-that-hasnt-existed-fin
 var memwatch = require('memwatch-next'),
     filename = "./page_testing/memwatch_stats.txt",
     firstLine = true,
-    leakFile = "./page_testing/memwatch_stats.txt";
+    leakFile = "./page_testing/memwatch_leak.txt";
 memwatch.on('leak', function(info) {
   var fs = require("fs");
   fs.appendFile(leakFile, JSON.stringify(info) + "\n");
@@ -27,31 +27,34 @@ memwatch.on('leak', function(info) {
 
 memwatch.on('stats', function(stats) {
   var fs = require("fs"),
-        info = [];
+      info = [],
+      d = new Date();
 
-    if(firstLine) {
-        info.push("num_full_gc");
-        info.push("num_inc_gc");
-        info.push("heap_compactions");
-        info.push("usage_trend");
-        info.push("estimated_base");
-        info.push("current_base");
-        info.push("min");
-        info.push("max");
-        fs.appendFileSync(filename, info.join(",") + "\n");
-        info = [];
-        firstLine = false;
-    }
-    info.push(stats["num_full_gc"]);
-    info.push(stats["num_inc_gc"]);
-    info.push(stats["heap_compactions"]);
-    info.push(stats["usage_trend"]);
-    info.push(stats["estimated_base"]);
-    info.push(stats["current_base"]);
-    info.push(stats["min"]);
-    info.push(stats["max"]);
+  if(firstLine) {
+    info.push("num_full_gc");
+    info.push("num_inc_gc");
+    info.push("heap_compactions");
+    info.push("usage_trend");
+    info.push("estimated_base");
+    info.push("current_base");
+    info.push("min");
+    info.push("max");
+    info.push("time_utc");
+    fs.appendFileSync(filename, info.join(",") + "\n");
+    info = [];
+    firstLine = false;
+  }
+  info.push(stats["num_full_gc"]);
+  info.push(stats["num_inc_gc"]);
+  info.push(stats["heap_compactions"]);
+  info.push(stats["usage_trend"]);
+  info.push(stats["estimated_base"]);
+  info.push(stats["current_base"]);
+  info.push(stats["min"]);
+  info.push(stats["max"]);
+  info.push(d.toUTCString());
 
-    fs.appendFile(filename, info.join(",") + "\n");
+  fs.appendFile(filename, info.join(",") + "\n");
 });
 /* END memwatch*/
 

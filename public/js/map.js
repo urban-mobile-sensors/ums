@@ -1,5 +1,5 @@
 // 'bin/map.js'
-var cdb = require('../../bin/cdb-client.js');
+//var cdb = require('../../bin/cdb-client.js');
 
 // CartoDB map vizualizations to use as simple samples
 // NY apt -> https://crshunter.cartodb.com/api/v2/viz/d8faee2a-4db6-11e5-9192-0e43f3deba5a/viz.json
@@ -68,6 +68,7 @@ var cbd_torque = {
 *****************************/
 
 $(document).ready(function () {
+  /* // get user position
   if (navigator.geolocation) {
     var timeoutVal = 10 * 1000 * 1000;
     //console.log('about to getCurrentPosition...');
@@ -79,7 +80,7 @@ $(document).ready(function () {
   }
   else {
     alert("Geolocation is not supported by this browser");
-  }
+  }*/
 
   map.on('load', function(e){
     // grab OSM basemap for context
@@ -98,13 +99,16 @@ $(document).ready(function () {
     });
 
   });
+  // set to view of Boston
+  startPosition = new L.LatLng(42.3601, -71.0589); // Boston, MA
+  map.setView(startPosition, 13);
 });
 
 /*****************************
   map.js internal functions
 *****************************/
 
-// handle geolocation response and initialize map
+// handle geolocation response and initialize map, for future versions
 function setPosition(pos) {
   startPosition = new L.LatLng(pos.coords.latitude, pos.coords.longitude);
   //console.log('success, startPosition is ', startPosition);

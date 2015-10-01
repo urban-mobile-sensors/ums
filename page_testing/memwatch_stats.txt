@@ -131,3 +131,8 @@ num_full_gc,num_inc_gc,heap_compactions,usage_trend,estimated_base,current_base,
 1,1,1,0,10362056,10362056,0,0
 num_full_gc,num_inc_gc,heap_compactions,usage_trend,estimated_base,current_base,min,max
 1,1,1,0,10369008,10369008,0,0
+num_full_gc,num_inc_gc,heap_compactions,usage_trend,estimated_base,current_base,min,max,time_utc
+1,1,1,0,10336008,10336008,0,0,Thu, 01 Oct 2015 03:41:56 GMT
+num_full_gc,num_inc_gc,heap_compactions,usage_trend,estimated_base,current_base,min,max,time_utc
+1,1,1,0,10340064,10340064,0,0,Thu, 01 Oct 2015 03:44:34 GMT
+2,8,2,0,24384240,24384240,0,0,Thu, 01 Oct 2015 04:29:16 GMT

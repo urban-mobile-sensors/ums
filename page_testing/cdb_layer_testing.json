@@ -1,0 +1,9 @@
+{
+  "user_name":"crshunter",
+  "type":"cartodb",
+  "sublayers":[{
+    "sql":"SELECT * FROM ums_roadtest0917_minuteaverages",
+    "cartocss":
+    "#ums_roadtest0917_minuteaverages{ polygon-fill: #F1EEF6; polygon-opacity: 0.8; line-color: #FFF; line-width: 0.5; line-opacity: 1;}#ums_roadtest0917_minuteaverages [ amb_temp <= 33.5] { polygon-fill: #91003F; }#ums_roadtest0917_minuteaverages [ amb_temp <= 32.03] { polygon-fill: #CE1256; }#ums_roadtest0917_minuteaverages [ amb_temp <= 31.07] { polygon-fill: #E7298A; }#ums_roadtest0917_minuteaverages [ amb_temp <= 30.25] { polygon-fill: #DF65B0; }#ums_roadtest0917_minuteaverages [ amb_temp <= 29.38] { polygon-fill: #C994C7; }#ums_roadtest0917_minuteaverages [ amb_temp <= 28.8] { polygon-fill: #D4B9DA; }#ums_roadtest0917_minuteaverages [ amb_temp <= 27.53] { polygon-fill: #F1EEF6; }"
+  }]
+}

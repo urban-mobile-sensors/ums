@@ -25,7 +25,23 @@ client.on('connect', function() {
   })
   // chained calls are allowed
   //.query("select * from tracker limit 5 offset 5", function(err, data){});
-});*/
+});
+
+// Silly Clayton, make use of the CartoDB created SQL functions:
+
+Hexagon (not sure how, but likely for summary data)
+SELECT CDB_HexagonGrid(polygon, side) AS the_geom FROM table_name
+
+Quantile bins
+SELECT CDB_QuantileBins(array_agg(numeric), integer)
+
+Jenks bins
+SELECT CDB_JenksBins(array_agg(numeric), integer)
+
+And be careful of annoying data types, eg
+SELECT CDB_JenksBins(array_agg(round(amb_temp::numeric, 2)), 7) FROM ums_roadtest0917_minuteaverages
+
+*/
 
 // should pull both a) stats summary of table and b) formatted data for graphing purposes
 function getBaseData(){

@@ -31,7 +31,8 @@ var map = new L.map('map'),
     startPosition,
     summary_tbl = 'ums_roadtest0917_minuteaverages',
     raw_tbl = 'ums_roadtest_0917',
-    cbd_sql = cartodb.SQL({ user: 'crshunter' });
+    cbd_sql = cartodb.SQL({ user: 'crshunter' }),
+    viz_url = 'https://crshunter.cartodb.com/api/v2/viz/4e2642ce-7d07-11e5-abc8-0ecfd53eb7d3/viz.json';
 
 // change to function which pulls table stats for binning from cdb-client.js and column from user input
 /*
@@ -61,19 +62,6 @@ var cdb_layer = {
     cartocss: makeCartoCSS(raw_tbl)
   }*/]
 };
-
-var LayerActions = {
-  summary: function(){
-    sublayers[0].show();
-    sublayers[1].hide();
-    return true;
-  },
-  raw: function(){
-    sublayers[1].show();
-    sublayers[0].hide();
-    return true;
-  }
-}
 
 
 function createSummarySQL(avgField){
@@ -107,7 +95,9 @@ function makeCartoCSS(tbl_name){
       tmp_css = tmp_css + '#' + tbl_name + ' [ amb_temp <= 28.8] { marker-fill: #D4B9DA; }',
       tmp_css = tmp_css + '#' + tbl_name + ' [ amb_temp <= 27.53] { marker-fill: #F1EEF6; }';
   } else {
-    var tmp_css = '#null{ marker-fill-opacity: 0.9; marker-line-color: #FFF; marker-line-width: 1; marker-line-opacity: 1; marker-placement: point; marker-type: ellipse; marker-width: 10; marker-fill: #FF6600; marker-allow-overlap: true;}';
+    var tmp_css = '#null{ marker-fill-opacity: 0.9; marker-line-color: #FFF; marker-line-width: 1; ',
+        tmp_css = tmp_css + 'marker-line-opacity: 1; marker-placement: point; marker-type: ellipse; ',
+        tmp_css = tmp_css + 'marker-width: 10; marker-fill: #FF6600; marker-allow-overlap: true;}';
   }
   return tmp_css;
 }
@@ -126,6 +116,37 @@ var cbd_torque = {
 /*****************************
   webmap controls >>
 *****************************/
+var sublayers = [];
+/*
+var LayerActions = {
+  summary: function(){
+    sublayers[0].setSQL(sql_summ);
+    console.log('summary LayerActions returning...');
+    return true;
+  },
+  raw: function(){
+    sublayers[0].setSQL(sql_raw);
+    console.log('raw LayerActions returning...');
+    return true;
+  }
+}
+*/
+
+var LayerActions = {
+  summary: function(){
+    sublayers[0].show();
+    sublayers[1].hide();
+    console.log('summary LayerActions returning... sql set to ', sublayers[0].get('sql'));
+    console.log('and cartocss is ', sublayers[0].get('cartocss'))
+    return true;
+  },
+  raw: function(){
+    sublayers[1].show();
+    sublayers[0].hide();
+    console.log('raw LayerActions returning...');
+    return true;
+  }
+}
 
 $(document).ready(function () {
   /* // get user position
@@ -142,6 +163,7 @@ $(document).ready(function () {
     alert("Geolocation is not supported by this browser");
   }*/
 
+
   map.on('load', function(e){
     // grab OSM basemap for context
     /*L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -156,19 +178,47 @@ $(document).ready(function () {
     var cbd_darkBase = cbd_viz.getLayers
     */
 
-    console.log('cbd_layer object is ', JSON.stringify(cdb_layer));
+    //console.log('cbd_layer object is ', JSON.stringify(cdb_layer));
+    //console.log(Object.getOwnPropertyNames(cdb_layer).filter(function (p) {return typeof cdb_layer[p] === 'function';}));
 
-    var cdb_layers = cartodb.createLayer(map, cdb_layer); // maybe not working b/c need to start with CartoDB viz.json?
-    console.log('cbd_layers object is ', JSON.stringify(cdb_layers));
-    cdb_layers.addTo(map);
+    // seems like need to start with CartoDB viz.json URL, not a layer definition
+    //var cdb_layers = cartodb.createLayer(map, cdb_layer);
+    var cdb_layers = cartodb.createLayer(map, viz_url);
+    console.log('cdb_layers created: ', cdb_layers);
+    //console.log('cbd_layers added, has ', cdb_layers.getSubLayerCount() ,' sublayers');
+    //console.log('cbd_layers object is ', JSON.stringify(cdb_layers));
+    cdb_layers.addTo(map)
+    .on('done', function(layer){
+      var sublayer = layer.getSubLayer(0);
+      sublayer.set({
+        sql: sql_summ,
+        cartocss: makeCartoCSS(summary_tbl)
+      });
+      sublayers.push(sublayer)
+      console.log('sublayer pushed: ', sublayer);
+      var sublayer2 = layer.createSubLayer({
+        sql: sql_raw,
+        cartocss: makeCartoCSS(raw_tbl)
+      });
+      sublayers.push(sublayer2);
+      //
+      sublayers[0].show();
+      sublayers[1].hide();
+      console.log('sublayer2 pushed: ', sublayer2);
+
+      console.log('layer has ', layer.getSubLayerCount() ,' sublayers');
+
+    }).on('error', function(err){
+      console.log('there was an error: ', err);
+    });
+/*    cdb_layers.createSubLayer(cdb_layer);
     cdb_layers.createSubLayer({
       sql: sql_raw,
       cartocss: makeCartoCSS(raw_tbl)
     });
-    console.log('cbd_layers added, has ', cdb_layers.getSubLayerCount() ,' sublayers');
+*/
 
-    //cbd_layers.sublayers[0].show(); // by default show summary table
-    //cbd_layers.sublayers[1].hide();
+    //console.log('cbd_layers added, has ', cdb_layers.getSubLayerCount() ,' sublayers');
 
     // button only creates layer from cartodb definition refernced above, TO DO: put updates / processing in back end, ths button may go away / be repurposed
     $('#primary-field').click(function(){
@@ -182,9 +232,11 @@ $(document).ready(function () {
 
   $('.button').click(function() {
     // pulled from CartoDB tutorial: http://docs.cartodb.com/tutorials/toggle_map_view.html
+    console.log('button clicked.');
     $('.button').removeClass('selected');
     $(this).addClass('selected');
     LayerActions[$(this).attr('id')]();
+    console.log('exiting button...');
   });
 });
 

@@ -1,0 +1,132 @@
+<html>
+    <head>
+        <title>UMS: Dashboard Dev</title>
+        <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.11/themes/css/cartodb.css" />
+        <script src="http://libs.cartocdn.com/cartodb.js/v3/3.11/cartodb.js"></script>
+        <style>
+            html, body {width:100%; height:100%; padding: 0; margin: 0;}
+            #map { width: 100%; height:100%; background: black;}
+            #menu { position: absolute; top: 5px; right: 10px; width: 400px; height:60px; background: transparent; z-index:10;}
+            #menu a {
+                margin: 15px 10px 0 0;
+                float: right;
+                vertical-align: baseline;
+                width: 70px;
+                padding: 10px;
+                text-align: center;
+                font: bold 11px "Helvetica",Arial;
+                line-height: normal;
+                color: #555;
+                border-radius: 4px;
+                border: 1px solid #777777;
+                background: #ffffff;
+                text-decoration: none;
+                cursor: pointer;
+            }
+            #menu a.selected,
+            #menu a:hover {
+                color: #F84F40;
+            }
+        </style>
+
+        <script>
+            var map;
+
+            function makeCartoCSS(tbl_name){
+                // something like this line should be able to dynamically grab bins from client, but better from backend?
+                //var bins = cbd_sql.query("SELECT CDB_JenksBins(array_agg(round(amb_temp::numeric, 2)), 7) FROM ums_roadtest0917_minuteaverages");
+                if (tbl_name == 'ums_roadtest0917_minuteaverages') {
+                    var tmp_css = '#' + tbl_name + '{ polygon-fill: #F1EEF6; polygon-opacity: 0.8; line-color: #FFF; line-width: 0.5; line-opacity: 1;}',
+                        tmp_css = tmp_css + '#' + tbl_name + ' [ amb_temp <= 33.5] { polygon-fill: #91003F; }',
+                        tmp_css = tmp_css + '#' + tbl_name + ' [ amb_temp <= 32.03] { polygon-fill: #CE1256; }',
+                        tmp_css = tmp_css + '#' + tbl_name + ' [ amb_temp <= 31.07] { polygon-fill: #E7298A; }',
+                        tmp_css = tmp_css + '#' + tbl_name + ' [ amb_temp <= 30.25] { polygon-fill: #DF65B0; }',
+                        tmp_css = tmp_css + '#' + tbl_name + ' [ amb_temp <= 29.38] { polygon-fill: #C994C7; }',
+                        tmp_css = tmp_css + '#' + tbl_name + ' [ amb_temp <= 28.8] { polygon-fill: #D4B9DA; }',
+                        tmp_css = tmp_css + '#' + tbl_name + ' [ amb_temp <= 27.53] { polygon-fill: #F1EEF6; }';
+                } else if (tbl_name == 'ums_roadtest_0917'){
+                    var tmp_css = '#' + tbl_name + '{   marker-fill-opacity: 0.8; marker-line-color: #FFF; marker-line-width: 0.5; marker-line-opacity: 0.5; marker-width: 10; marker-fill: #FFFFB2; marker-allow-overlap: true;}',
+                        tmp_css = tmp_css + '#' + tbl_name + ' [ amb_temp <= 34.14] { marker-fill: #91003F; }',
+                        tmp_css = tmp_css + '#' + tbl_name + ' [ amb_temp <= 32.03] { marker-fill: #CE1256; }',
+                        tmp_css = tmp_css + '#' + tbl_name + ' [ amb_temp <= 31.07] { marker-fill: #E7298A; }',
+                        tmp_css = tmp_css + '#' + tbl_name + ' [ amb_temp <= 30.25] { marker-fill: #DF65B0; }',
+                        tmp_css = tmp_css + '#' + tbl_name + ' [ amb_temp <= 29.38] { marker-fill: #C994C7; }',
+                        tmp_css = tmp_css + '#' + tbl_name + ' [ amb_temp <= 28.8] { marker-fill: #D4B9DA; }',
+                        tmp_css = tmp_css + '#' + tbl_name + ' [ amb_temp <= 27.53] { marker-fill: #F1EEF6; }';
+                } else {
+                    var tmp_css = '#null{ marker-fill-opacity: 0.9; marker-line-color: #FFF; marker-line-width: 1; ',
+                        tmp_css = tmp_css + 'marker-line-opacity: 1; marker-placement: point; marker-type: ellipse; ',
+                        tmp_css = tmp_css + 'marker-width: 10; marker-fill: #FF6600; marker-allow-overlap: true;}';
+                }
+                return tmp_css;
+            }
+
+            function init(){
+                // initiate leaflet map
+                map = new L.Map('map', {
+                    center: [42.3601, -71.0589],
+                    zoom: 12
+                })
+
+                L.tileLayer('https://dnv9my2eseobd.cloudfront.net/v3/cartodb.map-4xtxp73f/{z}/{x}/{y}.png', {
+                    attribution: 'Mapbox <a href="http://mapbox.com/about/maps" target="_blank">Terms &amp; Feedback</a>'
+                }).addTo(map);
+                var sql_summ = 'SELECT * FROM ums_roadtest0917_minuteaverages',
+                    sql_raw = 'SELECT * FROM ums_roadtest_0917';
+
+                var layerUrl = 'https://crshunter.cartodb.com/api/v2/viz/4e2642ce-7d07-11e5-abc8-0ecfd53eb7d3/viz.json';
+
+                var sublayers = [];
+
+                cartodb.createLayer(map, layerUrl)
+                .addTo(map)
+                .on('done', function(layer){
+                    // change the query for the first layer
+                    var subLayerOptions = {
+                        sql: "SELECT * FROM ne_10m_populated_places_simple",
+                        cartocss: "#ne_10m_populated_places_simple{marker-fill: #F84F40; marker-width: 8; marker-line-color: white; marker-line-width: 2; marker-clip: false; marker-allow-overlap: true;}"
+                    }
+
+                    var sublayer = layer.getSubLayer(0);
+
+                    sublayer.set(subLayerOptions);
+
+                    sublayers.push(sublayer);
+                }).on('error', function(err) {
+                    //log the error
+                    console.log('error is ', err);
+                });
+
+                var LayerActions = {
+                    summary: function(){
+                        sublayers[0].setSQL(sql_summ);
+                        sublayers[0].setCartoCSS(makeCartoCSS('ums_roadtest0917_minuteaverages'));
+                        console.log('summary LayerActions returning...');
+                        return true;
+                    },
+                    raw: function(){
+                        sublayers[0].setSQL(sql_raw);
+                        sublayers[0].setCartoCSS(makeCartoCSS('ums_roadtest_0917'));
+                        console.log('raw LayerActions returning...');
+                        return true;
+                    }
+                }
+
+                $('.button').click(function() {
+                    $('.button').removeClass('selected');
+                    $(this).addClass('selected');
+                    //this gets the id of the different buttons and calls to LayerActions which responds according to the selected id
+                    LayerActions[$(this).attr('id')]();
+                });
+            }
+        </script>
+    </head>
+
+    <body onload="init()">
+        <div id='map'></div>
+        <div id='menu'>
+            <a href="#summary" id="summary" class="button summary">summary</a>
+            <a href="#raw" id="raw" class="button raw">raw</a>
+        </div>
+    </body>
+</html>
